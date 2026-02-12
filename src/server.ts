@@ -21,3 +21,12 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Nexus Brain API running on port ${port}`);
 });
+
+app.post('/api/ejemplo', (req, res) => {
+  res.json({
+    ok: true,
+    recibido: req.body,
+    mensaje: "Ruta funcionando correctamente"
+  });
+});
+
