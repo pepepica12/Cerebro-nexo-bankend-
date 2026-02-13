@@ -1,28 +1,25 @@
-import { verifySignature } from './lib/verifySignature';
 import 'dotenv/config';
 import express from 'express';
+
+import { verifySignature } from './lib/verifySignature';
 import { reposRouter } from './routes/repos';
 import { platformsRouter } from './routes/platforms';
 import { cdnRouter } from './routes/cdn';
-import { searchCxRouter } from './routes/searchCx';
 
 const app = express();
 app.use(express.json());
 
+// Rutas principales
 app.use('/repos', reposRouter);
 app.use('/platforms', platformsRouter);
 app.use('/cdn', cdnRouter);
-app.use('/search', searchCxRouter);
 
+// Healthcheck
 app.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'nexus-brain-backend' });
 });
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Nexus Brain API running on port ${port}`);
-});
-
+// Ejemplo
 app.post('/api/ejemplo', (req, res) => {
   res.json({
     ok: true,
@@ -30,21 +27,6 @@ app.post('/api/ejemplo', (req, res) => {
     mensaje: "Ruta funcionando correctamente"
   });
 });
-
-
-app.post('/api/verify', (req, res) => {
-  const did = req.header('X-DID');
-  const signature = req.header('X-Signature');
-
-  res.json({
-    ok: true,
-    did,
-    signature,
-    body: req.body,
-    mensaje: "Endpoint /api/verify operativo (sin verificación criptográfica aún)"
-  });
-});
-
 
 // ----------------------
 // RUTA /api/verify REAL
@@ -54,21 +36,28 @@ app.post('/api/verify', (req, res) => {
   const signature = req.header('X-Signature');
 
   if (!did || !signature) {
-    return res.status(400).json({ ok: false, error: "Faltan headers X-DID o X-Signature" });
+    return res.status(400).json({ ok: false, error: "Faltan encabezados DID o Signature" });
   }
 
   const publicKey = process.env.PUBLIC_KEY;
   if (!publicKey) {
-    return res.status(500).json({ ok: false, error: "PUBLIC_KEY no configurada en Render" });
+    return res.status(500).json({ ok: false, error: "PUBLIC_KEY no está configurada" });
   }
 
   const message = JSON.stringify(req.body);
   const valid = verifySignature(publicKey, message, signature);
 
   res.json({
-    ok: valid,
+    ok: true,
+    valid,
     did,
     body: req.body,
     mensaje: valid ? "Firma válida" : "Firma inválida"
   });
+});
+
+// Iniciar servidor
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`Nexus Brain API running on port ${port}`);
 });
