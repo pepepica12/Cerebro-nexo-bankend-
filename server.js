@@ -43,6 +43,17 @@ server.get("/api/comments", async (req, res) => {
   }
 });
 
+server.get("/api/usuarios/activos", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT id, nombre, ultimo_login FROM usuarios WHERE ultimo_login > NOW() - INTERVAL '30 days'"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Ruta RSS
 server.get("/rss", leerRSS);
 
