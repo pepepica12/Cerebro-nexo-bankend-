@@ -49,6 +49,27 @@ server.get("/", (req, res) => {
   res.send("Backend activo en Render - Cerebro Nexo");
 });
 
+// Rutas adicionales para frontend
+server.get("/api/estudiantes", (req, res) => {
+  res.json({ mensaje: "Ruta Estudiantes activa" });
+});
+
+server.get("/api/hogar", (req, res) => {
+  res.json({ mensaje: "Ruta Hogar activa" });
+});
+
+server.get("/api/negocios", (req, res) => {
+  res.json({ mensaje: "Ruta Negocios activa" });
+});
+
+server.get("/api/comunidad", (req, res) => {
+  res.json({ mensaje: "Ruta Comunidad activa" });
+});
+
+server.get("/api/ejemplo", (req, res) => {
+  res.json({ mensaje: "Backend conectado correctamente" });
+});
+
 // Escuchar en Render / Railway / Vercel
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
