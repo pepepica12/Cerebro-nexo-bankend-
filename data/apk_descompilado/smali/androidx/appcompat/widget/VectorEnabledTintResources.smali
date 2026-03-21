@@ -1,0 +1,126 @@
+.class public Landroidx/appcompat/widget/VectorEnabledTintResources;
+.super Landroid/content/res/Resources;
+.source "VectorEnabledTintResources.java"
+
+
+# static fields
+.field public static sCompatVectorFromResourcesEnabled:Z
+
+
+# instance fields
+.field public final mContextRef:Ljava/lang/ref/WeakReference;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 39
+    const/4 v0, 0x0
+
+    sput-boolean v0, Landroidx/appcompat/widget/VectorEnabledTintResources;->sCompatVectorFromResourcesEnabled:Z
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/content/Context;Landroid/content/res/Resources;)V
+    .locals 3
+    .param p1, "context"    # Landroid/content/Context;
+    .param p2, "res"    # Landroid/content/res/Resources;
+
+    .line 55
+    invoke-virtual {p2}, Landroid/content/res/Resources;->getAssets()Landroid/content/res/AssetManager;
+
+    move-result-object v0
+
+    invoke-virtual {p2}, Landroid/content/res/Resources;->getDisplayMetrics()Landroid/util/DisplayMetrics;
+
+    move-result-object v1
+
+    invoke-virtual {p2}, Landroid/content/res/Resources;->getConfiguration()Landroid/content/res/Configuration;
+
+    move-result-object v2
+
+    invoke-direct {p0, v0, v1, v2}, Landroid/content/res/Resources;-><init>(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;)V
+
+    .line 56
+    new-instance v0, Ljava/lang/ref/WeakReference;
+
+    invoke-direct {v0, p1}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
+
+    iput-object v0, p0, Landroidx/appcompat/widget/VectorEnabledTintResources;->mContextRef:Ljava/lang/ref/WeakReference;
+
+    .line 57
+    return-void
+.end method
+
+.method public static isCompatVectorFromResourcesEnabled()Z
+    .locals 1
+
+    .line 93
+    sget-boolean v0, Landroidx/appcompat/widget/VectorEnabledTintResources;->sCompatVectorFromResourcesEnabled:Z
+
+    return v0
+.end method
+
+.method public static shouldBeUsed()Z
+    .locals 1
+
+    .line 42
+    invoke-static {}, Landroidx/appcompat/widget/VectorEnabledTintResources;->isCompatVectorFromResourcesEnabled()Z
+
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+
+# virtual methods
+.method public getDrawable(I)Landroid/graphics/drawable/Drawable;
+    .locals 2
+    .param p1, "id"    # I
+
+    .line 66
+    iget-object v0, p0, Landroidx/appcompat/widget/VectorEnabledTintResources;->mContextRef:Ljava/lang/ref/WeakReference;
+
+    invoke-virtual {v0}, Ljava/lang/ref/Reference;->get()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/content/Context;
+
+    .line 67
+    .local v0, "context":Landroid/content/Context;
+    if-eqz v0, :cond_0
+
+    .line 68
+    invoke-static {}, Landroidx/appcompat/widget/ResourceManagerInternal;->get()Landroidx/appcompat/widget/ResourceManagerInternal;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v0, p0, p1}, Landroidx/appcompat/widget/ResourceManagerInternal;->onDrawableLoadedFromResources(Landroid/content/Context;Landroidx/appcompat/widget/VectorEnabledTintResources;I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v1
+
+    return-object v1
+
+    .line 70
+    :cond_0
+    invoke-super {p0, p1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v1
+
+    return-object v1
+.end method
+
+.method public final superGetDrawable(I)Landroid/graphics/drawable/Drawable;
+    .locals 1
+    .param p1, "id"    # I
+
+    .line 75
+    invoke-super {p0, p1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    return-object v0
+.end method
