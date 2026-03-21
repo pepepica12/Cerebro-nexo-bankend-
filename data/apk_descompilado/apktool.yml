@@ -1,0 +1,28 @@
+version: 2.9.3
+apkFileName: app-universal-debug.apk
+isFrameworkApk: false
+usesFramework:
+  ids:
+  - 1
+  tag: null
+sdkInfo:
+  minSdkVersion: 26
+  targetSdkVersion: 34
+packageInfo:
+  forcedPackageId: 127
+  renameManifestPackage: null
+versionInfo:
+  versionCode: 15
+  versionName: 1.03.01-6d62752-30.11.25
+resourcesAreCompressed: false
+sharedLibrary: false
+sparseResources: false
+unknownFiles:
+  DebugProbesKt.bin: 8
+doNotCompress:
+- resources.arsc
+- lib/arm64-v8a/libXlorie.so
+- lib/armeabi-v7a/libXlorie.so
+- lib/x86/libXlorie.so
+- lib/x86_64/libXlorie.so
+- png
